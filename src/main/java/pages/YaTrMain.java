@@ -2,11 +2,12 @@ package pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import utils.Locators;
 
 public class YaTrMain {
 
-    private WebDriver browser;
+    WebDriver browser;
 
     public YaTrMain(WebDriver browser) {
         this.browser = browser;

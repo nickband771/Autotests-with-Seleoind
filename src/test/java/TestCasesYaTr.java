@@ -4,17 +4,58 @@ import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import pages.YaTrMain;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TestCasesYaTr {
 
-    private WebDriver browser;
+    WebDriver browser;
 
     @Before
-    public void precondition() {
-        browser = new ChromeDriver();
-        browser.manage().window().maximize();
+    public void precondition() throws URISyntaxException, MalformedURLException {
+
+        ChromeOptions options = new ChromeOptions();
+        options.setCapability("browserVersion", "121.0");
+        options.setCapability("selenoid:options", new HashMap<String, Object>() {{
+            /* How to add test badge */
+            put("name", "Test badge...");
+
+            /* How to set session timeout */
+            put("sessionTimeout", "15m");
+
+            /* How to set timezone */
+            put("env", new ArrayList<String>() {{
+                add("TZ=UTC");
+            }});
+
+            /* How to add "trash" button */
+            put("labels", new HashMap<String, Object>() {{
+                put("manual", "true");
+            }});
+
+            /* How to enable video recording */
+            put("enableVideo", true);
+        }});
+
+        //browser = new ChromeDriver();
+        browser = new RemoteWebDriver(new URI("http://localhost:4444/wd/hub").toURL(), options);
         browser.get("https://translate.yandex.ru/");
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException ex) {
+            throw new RuntimeException(ex);
+        }
+        browser.manage().window().maximize();
+
     }
 
     @Test
@@ -190,6 +231,11 @@ public class TestCasesYaTr {
 
     @After
     public void closeBrowser() {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException ex) {
+            throw new RuntimeException(ex);
+        }
         browser.quit();
     }
 }

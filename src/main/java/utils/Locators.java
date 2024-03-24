@@ -1,10 +1,11 @@
 package utils;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public interface Locators {
 
-    public interface YaTrMain {
+    interface YaTrMain {
 
         By sourceLanguageButton = By.id("srcLangButton");
 
@@ -27,7 +28,7 @@ public interface Locators {
         By firstHistoryRecordsItemTranslation = By.xpath("//*[@id='historyRecent']/div[@class='history_records-container']/div[@class='history_records-items_container invisible-horizontal-scrollbar']/div[@class='history_records-item'][1]/div[@class='history_records-item-translation']");
     }
 
-    public interface LangSelect {
+    interface LangSelect {
 
         By LANG_BUTTON = By.xpath("//*[@class='langs-column langs-column_count_5']/div[@class='langs-item langs-item_cell langs-item_hasLetterSpace'][5]");
     }
